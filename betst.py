@@ -25,6 +25,7 @@ def get_handler(hname):
         return handler
     res = handler()
     HANDLERS[hname] = res
+    logger.debug('%s: init external handler', hname)
     return res
 
 class HandlerError(Exception):
@@ -67,7 +68,6 @@ class smscru(Handler):
 
     def __init__(self):
         self.sms = smsc_api.SMSC()
-        logger.debug('%s: init external API', self.name)
 
     def sendraw(self, data):
         check = self.check(data)
