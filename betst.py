@@ -23,14 +23,18 @@ def get_handler(hname):
         raise HandlerError('not found', hname)
     if isinstance(handler, Handler):
         return handler
-    return handler()
+    res = handler()
+    HANDLERS[hname] = res
+    return res
 
 class HandlerError(Exception):
     pass
 
 class Handler:
     def sendraw(self, data):
-        raise NotImplemented()
+        raise NotImplemented
+
+    name = NotImplemented
 
     def send(self, data):
         rc = self.sendraw(data)
@@ -40,9 +44,6 @@ class Handler:
         else:
             logger.info('%s', rc)
         return rc
-
-    name = NotImplemented
-    single = NotImplemented
 
     def check(self, data):
         if not isinstance(data, dict):
@@ -63,10 +64,10 @@ class Handler:
 
 class smscru(Handler):
     name = 'post.smsc.ru'
-    single = True
 
     def __init__(self):
         self.sms = smsc_api.SMSC()
+        logger.debug('%s: init external API', self.name)
 
     def sendraw(self, data):
         check = self.check(data)
