@@ -1,5 +1,3 @@
-#coding: cp1251
-
 import logging
 import smsc_api
 
@@ -75,9 +73,8 @@ class smscru(Handler):
         if check:
             return check
         rc = self.sms.send_sms(data['phone'], data['text'])
-        # возвращает массив (<id>, <количество sms>, <стоимость>, <баланс>)
-        # в случае успешной отправки
-        # либо массив (<id>, -<код ошибки>) в случае ошибки
+        # (<id>, <sms count>, <cost>, <balance>) - Ok
+        # (<id>, -<error code>) - Error
         if len(rc) == 4:
             return {'status': 'ok', 'phone': data['phone']}
         else:
