@@ -4,4 +4,8 @@ if __name__ == '__main__':
     sms_handler = get_handler('post.smsc.ru')
     print(len(sms_handler.send({'phone': '', 'text': ''})))
     sms_handler = get_handler('post.smsc.ru')
+    print(len(sms_handler.send({'phone': '123', 'text': ''})))
+    sms_handler = get_handler('post.smstraffic.ru')
     print(len(sms_handler.send({'phone': '', 'text': ''})))
+    sms_handler = get_handler('post.smstraffic.ru')
+    print(len(sms_handler.send({'phone': '123', 'text': ''})))
